@@ -115,6 +115,46 @@ ifeq ($(BOARD_CACHEIMAGE_PARTITION_SIZE),)
 LOCAL_REQUIRED_MODULES := recovery-persist recovery-refresh
 endif
 
+### BEGIN: factory recovery
+
+LOCAL_ADDITIONAL_DEPENDENCIES += \
+    factory_recovery
+
+ifeq ($(MINI_RECOVERY),)
+# fs tools
+LOCAL_ADDITIONAL_DEPENDENCIES += \
+    e2fsck \
+    mke2fs \
+    tune2fs \
+    resize2fs \
+    make_ext4fs
+
+# system tools
+LOCAL_ADDITIONAL_DEPENDENCIES += \
+    strace
+
+# audio tools
+LOCAL_ADDITIONAL_DEPENDENCIES += \
+    tinycap \
+    tinymix \
+    tinypcminfo \
+    tinyplay
+endif
+
+# system tools
+LOCAL_ADDITIONAL_DEPENDENCIES += \
+    libcrypto \
+    linker \
+    logcat \
+    logd \
+    logwrapper \
+    reboot \
+    sh \
+    toolbox_recovery \
+    toybox_recovery \
+
+### END: factory recovery
+
 include $(BUILD_EXECUTABLE)
 
 # recovery-persist (system partition dynamic executable run after /data mounts)
@@ -172,3 +212,6 @@ include \
     $(LOCAL_PATH)/uncrypt/Android.mk \
     $(LOCAL_PATH)/updater/Android.mk \
     $(LOCAL_PATH)/update_verifier/Android.mk \
+    $(LOCAL_PATH)/prebuilt/Android.mk \
+    $(LOCAL_PATH)/toolbox/Android.mk \
+    $(LOCAL_PATH)/toybox/Android.mk
