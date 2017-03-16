@@ -83,11 +83,12 @@ service ueventd /sbin/ueventd
     seclabel u:r:ueventd:s0
 
 service healthd /sbin/healthd -r
-    critical
     seclabel u:r:healthd:s0
+    disabled
 
 service recovery /sbin/recovery
     seclabel u:r:recovery:s0
+    disabled
 
 service adbd /sbin/adbd --root_seclabel=u:r:su:s0 --device_banner=recovery
     disabled
@@ -95,12 +96,12 @@ service adbd /sbin/adbd --root_seclabel=u:r:su:s0 --device_banner=recovery
     seclabel u:r:adbd:s0
 
 # Always start adbd on userdebug and eng builds
-on property:ro.debuggable=1
-    write /sys/class/android_usb/android0/enable 1
-    start adbd
+#on property:ro.debuggable=1
+#    write /sys/class/android_usb/android0/enable 1
+#    start adbd
 
 # Restart adbd so it can run as root
-on property:service.adb.root=1
-    write /sys/class/android_usb/android0/enable 0
-    restart adbd
-    write /sys/class/android_usb/android0/enable 1
+#on property:service.adb.root=1
+#    write /sys/class/android_usb/android0/enable 0
+#    restart adbd
+#    write /sys/class/android_usb/android0/enable 1
