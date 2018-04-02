@@ -85,6 +85,7 @@ service charger /charger -r
 
 service recovery /sbin/recovery
     seclabel u:r:recovery:s0
+    disabled
 
 service adbd /sbin/adbd --root_seclabel=u:r:su:s0 --device_banner=recovery
     disabled
